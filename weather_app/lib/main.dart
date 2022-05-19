@@ -13,7 +13,7 @@ class WeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const WelcomeScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
