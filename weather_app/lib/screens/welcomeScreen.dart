@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use, file_names
-
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:weather_app/services/location.dart';
@@ -7,6 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+const apiKey = '77d313853f394e81fe7a898232b1f8bf';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -16,32 +16,45 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  double? latitude;
+  double? longitude;
   @override
   void initState() {
     super.initState();
     getLocation();
+  }
+
+  void getLocation() async {
+    Location location = Location();
+    await location.getCurrentLocation();
+
+    latitude = location.latitude;
+    print(latitude);
+
+    longitude = location.longitude;
+    print(longitude);
     getData();
   }
 
-  void getLocation() {
-    Location location = Location();
-    location.getCurrentLocation();
-    // ignore: avoid_print
-    print(location.latitude);
-    // ignore: avoid_print
-    print(location.longitude);
-  }
-
   void getData() async {
-    http.Response response = await http
-        .get(Uri.parse('https://goweather.herokuapp.com/weather/Pokhara'));
+    http.Response response = await http.get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey'));
     String data = response.body;
-    var decodeData = jsonDecode(data);
-    var temp = decodeData['temperature'];
-    print(temp);
-    var desc = decodeData['description'];
-    print(desc);
-    print(response.statusCode);
+    if (response.statusCode == 200) {
+      var decodeData = jsonDecode(data);
+      double temperaute = decodeData['main']['temp'];
+      String condition = decodeData['weather'][0]['description'];
+      String cityName = decodeData['name'];
+      print(temperaute);
+      print(condition);
+      print(cityName);
+
+      // var desc = decodeData['description'];
+      // // ignore: avoid_print
+      // print(desc);
+    } else {
+      print(response.statusCode);
+    }
   }
 
   @override
@@ -53,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             'https://assets9.lottiefiles.com/packages/lf20_boJRmE.json',
             fit: BoxFit.cover,
             height: double.infinity),
-        MainTitle(),
+        const MainTitle(),
         GlassmorphicContainer(
             // padding: const EdgeInsets.fromLTRB(0.0, 400, 0.0, 0.0),
             margin: const EdgeInsets.fromLTRB(40.0, 650.0, 0.0, 0.0),
@@ -88,7 +101,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 }
 
 class MainTitle extends StatefulWidget {
-  MainTitle({Key? key}) : super(key: key);
+  const MainTitle({Key? key}) : super(key: key);
 
   @override
   State<MainTitle> createState() => _MainTitleState();
