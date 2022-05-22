@@ -16,8 +16,11 @@ class _MainTitleState extends State<MainTitle> {
   int? temp;
   String? condition;
   String? cityName;
+  // ignore: prefer_typing_uninitialized_variables
   var humidity;
+  // ignore: prefer_typing_uninitialized_variables
   var visibilty;
+  // ignore: prefer_typing_uninitialized_variables
   var pressure;
 
   @override
@@ -177,7 +180,7 @@ class _MainTitleState extends State<MainTitle> {
                       color: Color(0xFF300016),
                       fontSize: 30.00,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Grape Nuts'),
+                      fontFamily: 'Poppins'),
                 ),
                 const SizedBox(
                   height: 10.0,
@@ -197,8 +200,8 @@ class _MainTitleState extends State<MainTitle> {
             children: [
               Container(
                   height: 100.0,
-                  margin: const EdgeInsets.fromLTRB(20.0, 120.0, 0.0, 20.0),
-                  // padding: const EdgeInsets.fromLTRB(0.0, 0, 0.0, 50.0),
+                  margin: const EdgeInsets.fromLTRB(20.0, 150.0, 0.0, 0.0),
+                  padding: const EdgeInsets.all(20.0),
                   alignment: Alignment.topCenter,
                   child: Transform.rotate(
                     angle: -math.pi / 2,
@@ -206,9 +209,9 @@ class _MainTitleState extends State<MainTitle> {
                         style: const TextStyle(
                             decoration: TextDecoration.none,
                             color: Color(0xFF835496),
-                            fontSize: 30.00,
+                            fontSize: 20.00,
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Grape Nuts')),
+                            fontFamily: 'Poppins')),
                   )),
             ],
           ),
